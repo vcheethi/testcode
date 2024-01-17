@@ -1,1 +1,1 @@
-c
+workingDirectory: '$(Build.SourcesDirectory)/Performance/rg_nonpsubpath'
