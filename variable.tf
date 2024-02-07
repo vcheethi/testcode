@@ -1,95 +1,147 @@
-variable "app_service_name" {
-    type        = string
-}
+variable "storage_account_name" {
 
-variable "location" {
-    type        = string
 }
 
 variable "resource_group_name" {
-    type        = string
+
 }
 
-variable "service_plan_id" {
-    type        = string
+variable "location" {
+
+}
+
+variable "account_kind" {
+
+}
+
+variable "account_tier" {
+
+}
+
+variable "access_tier" {
+
+}
+
+variable "account_replication_type" {
+
+}
+
+variable "enable_https_traffic_only" {
+
+}
+
+variable "min_tls_version" {
+  default = "TLS1_2"
+}
+
+#variable "allow_blob_public_access" {
+#    default     = false
+#}
+
+variable "allow_nested_items_to_be_public" {
+  default     = false
+}
+
+variable "nfsv3_enabled" {
+
+}
+
+variable "is_hns_enabled" {
+
+}
+
+variable "large_file_share_enabled" {
+
 }
 
 variable "tags" {
-  description = "A map of tags to add to all resources"
-  type        = map(string)
-  default     = {}
+
 }
 
-variable "vnet_integration_required" {
-    type        = bool
+variable "default_action" {
+
 }
 
-variable "subnet_id_for_vnet_integration" {
-    type        = string
+variable "ip_rules" {
+
 }
 
-variable "minimum_tls_version" {
-    default     = "1.2"
-}
-
-variable "https_only" {
-    type       = bool
-    default    = true
-}
-
-variable "enabled" {
-    default    = true
-}
-
-variable "identity_ids" {
-    default = null
-}
-
-variable "identity_type" {
-    type     = string
-}
-
-variable "docker_image" {
-    default     = null
-}
-
-variable "docker_image_tag" {
-    default     = null
-}
-
-variable "dotnet_version" {
-    default     = null
-}
-
-variable "java_server" {
-    default     = null
-}
-
-variable "java_server_version" {
-    default     = null
-}
-
-variable "java_version" {
-    default     = null
-}
-
-variable "node_version" {
-    default     = null
-}
-
-variable "php_version" {
-    default     = null
-}
-
-variable "python_version" {
-    default     = null
-}
-
-variable "ruby_version" {
-    default     = null
-}
+variable "virtual_network_subnet_ids" {}
 
 
-variable "app_settings" {
-    #
+variable "change_feed_enabled" {
+
 }
+
+variable "container_soft_delete_retention_days" {
+
+}
+
+variable "blob_soft_delete_retention_days" {
+
+}
+
+variable "blob_enable_versioning" {
+
+}
+
+variable "share_soft_delete_retention_days" {
+
+}
+
+variable "containers_list" {
+  description = "List of containers to create and their access levels."
+#  type        = list(object({ name = string, access_type = string }))
+  default     = []
+}
+
+variable "file_shares" {
+  description = "List of containers to create and their access levels."
+#  type        = list(object({ name = string, quota = number }))
+  default     = []
+}
+
+variable "queues" {
+  description = "List of storages queues"
+#  type        = list(string)
+  default     = []
+}
+
+variable "tables" {
+  description = "List of storage tables."
+#  type        = list(string)
+  default     = []
+}
+
+variable "blob_private_endpoint_required" {
+  default     = false
+}
+
+variable "file_private_endpoint_required" {
+  default     = false
+}
+
+variable "queue_private_endpoint_required" {
+  default     = false
+}
+
+variable "table_private_endpoint_required" {
+  default     = false
+}
+
+variable "dfs_private_endpoint_required" {
+  default     = false
+}
+
+variable "privatendpoint_subnet_id"{
+
+}
+
+variable "network_rules_bypass" {
+
+}
+
+variable "network_routing" {
+  
+}
+
