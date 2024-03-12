@@ -1,27 +1,48 @@
-resource "azurerm_log_analytics_workspace" "log_analytics" {
-  name                = var.log_analytics_workspace_name
-  location            = var.location
+data "azurerm_storage_account" "stgaccount" {
+  name                = var.storage_account_name
   resource_group_name = var.resource_group_name
-  sku                 = var.sku
-  retention_in_days   = var.retention_in_days
-  tags                = var.tags
+}
+
+/*
+resource "azurerm_function_app" "function" {
+  name                       = var.function_name
+  resource_group_name        = var.resource_group_name
+  location                   = var.location
+  app_service_plan_id        = var.app_service_plan_id
+  storage_account_name       = var.storage_account_name
+  storage_account_access_key = data.azurerm_storage_account.stgaccount.primary_access_key
+  https_only                 = true
+  os_type                    = "linux"
+  version                    = "~3"
+  app_settings               = var.app_settings
+  tags                       = var.tags
+}
+*/
+
+resource "azurerm_linux_function_app" "function" {
+  name                       = var.function_name
+  resource_group_name        = var.resource_group_name
+  location                   = var.location
+
+  storage_account_name       = var.storage_account_name
+  storage_account_access_key = data.azurerm_storage_account.stgaccount.primary_access_key
+  service_plan_id            = var.service_plan_id
+
+  site_config {}
+  app_settings               = var.app_settings
+  tags                       = var.tags
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [tags]
+    ignore_changes = all
   }
 }
 
-resource "azurerm_application_insights" "application_insights" {
-  name                = var.application_insights_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  application_type    = "web"
-  workspace_id        = azurerm_log_analytics_workspace.log_analytics.id
-  tags                = var.tags
+resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration" {
+  count               = var.vnet_integration_required ? 1 : 0
 
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes  = [tags]
-  }
+  app_service_id = azurerm_linux_function_app.function.id
+  subnet_id      = var.subnet_id_for_vnet_integration
 }
+
+
